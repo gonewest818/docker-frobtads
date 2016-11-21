@@ -1,0 +1,11 @@
+FROM alpine:3.4
+
+RUN apk --no-cache add g++ make ncurses-dev curl curl-dev
+
+RUN curl -O http://www.tads.org/frobtads/frobtads-1.2.3.tar.gz \
+    tar xfz frobtads-1.2.3.tar.gz \
+    cd frobtads-1.2.3 \
+    ./configure \
+    make
+
+

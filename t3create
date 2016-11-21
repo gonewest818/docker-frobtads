@@ -1,0 +1,45 @@
+#!/bin/bash
+
+if [ -n "$1" ]
+then
+  mkdir $1
+  cd $1
+  mkdir obj
+  cat > $1.t3m << EOF
+-D LANGUAGE=en_us
+-D MESSAGESTYLE=neu
+-Fy obj -Fo obj
+-o $1.t3
+-lib system
+-lib adv3/adv3
+-source $1
+EOF
+  cat > $1.t << EOF
+#include <adv3.h>
+#include <en_us.h>
+
+gameMain: GameMainDef
+  initialPlayerChar = me
+;
+
+versionInfo: GameID
+  name = 'My First Game'
+  byline = 'by Bob Author'
+  authorEmail = 'Bob Author <bob@myisp.com>'
+  desc = 'This is an example of how to start a new game project. '
+  version = '1'
+  IFID = '`uuidgen`'
+;
+
+firstRoom: Room 'Starting Room'
+  "This is the boring starting room."
+;
+
++me: Actor
+; 
+EOF
+else
+  echo "usage: `basename $0` <name>"
+  echo "creates a new tads3 project in the current working directory"
+fi
+
